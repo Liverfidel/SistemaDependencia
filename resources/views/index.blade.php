@@ -14,18 +14,18 @@
         <!-- Botões de Gerenciamento -->
         <a href="{{ route('alunos.index') }}" class="btn btn-primary mb-3">Gerenciar Alunos</a>
         <a href="{{ route('disciplinas.index') }}" class="btn btn-primary mb-3">Gerenciar Disciplinas</a>
-        <a href="{{ route('aluno_disciplina.createByTurma') }}" class="btn btn-secondary mb-3">Cadastrar Disciplinas Aprovadas por Turma</a>
+        <a href="{{ route('aluno_disciplina.createByTurma') }}" class="btn btn-secondary mb-3">Cadastrar Disciplinas Aprovadas por Turma</a>    
+        <a href="{{ route('aluno_disciplina.createByAluno') }}" class="btn btn-secondary mb-3">Cadastrar Disciplinas Aprovadas por Aluno</a>
 
         <!-- Botões de Relatórios -->
         <h3>Relatórios</h3>
 
-       <!-- Formulário para Relatório por Aluno (usando CPF) -->
+        <!-- Formulário para Relatório por Aluno (usando CPF) -->
         <form action="{{ route('relatorio.aluno') }}" method="GET" class="mb-3">
             <label for="cpf">Relatório por Aluno:</label>
             <input type="text" id="cpf" name="cpf" placeholder="Digite CPF do Aluno" required>
             <button type="submit" class="btn btn-secondary">Gerar Relatório</button>
         </form>
-
 
         <!-- Relatório por Disciplina -->
         <form action="{{ route('relatorio.disciplina') }}" method="GET" class="mb-3">
@@ -34,7 +34,6 @@
             <button type="submit" class="btn btn-secondary">Gerar Relatório</button>
         </form>
 
-
         <!-- Relatório por Turma -->
         <form action="{{ route('relatorio.turma') }}" method="GET" class="mb-3">
             <label for="numTurma">Relatório por Turma:</label>
@@ -42,14 +41,9 @@
             <button type="submit" class="btn btn-secondary">Gerar Relatório</button>
         </form>
 
-        
-    <footer class="bg-light text-center py-3 mt-4">
-        <p>Desenvolvido por Liver - Sistema de Gestão &copy; {{ date('Y') }}</p>
-    </footer>
-
-
-
-
+        <footer class="bg-light text-center py-3 mt-4">
+            <p>Desenvolvido por Liver - Sistema de Gestão em Dependencia &copy; {{ date('Y') }}</p>
+        </footer>
     </div>
 </body>
 </html>

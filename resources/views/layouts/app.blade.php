@@ -28,7 +28,7 @@
 
    
     <footer class="bg-light text-center py-3 mt-4">
-        <p>Desenvolvido por Liver - Sistema de Gestão &copy; {{ date('Y') }}</p>
+        <p>Desenvolvido por Liver - Sistema de Gestão em Dependencia &copy; {{ date('Y') }}</p>
     </footer>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

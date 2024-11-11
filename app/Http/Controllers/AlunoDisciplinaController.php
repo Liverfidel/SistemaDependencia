@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 
 class AlunoDisciplinaController extends Controller
 {
-    
     public function createByTurma()
     {
         $disciplinas = Disciplina::all();
@@ -16,7 +15,6 @@ class AlunoDisciplinaController extends Controller
         return view('aluno_disciplina.create_by_turma', compact('turmas', 'disciplinas'));
     }
 
-    
     public function storeByTurma(Request $request)
     {
         $request->validate([
@@ -33,8 +31,46 @@ class AlunoDisciplinaController extends Controller
         return redirect()->route('aluno_disciplina.createByTurma')->with('success', 'Disciplinas aprovadas registradas para a turma selecionada.');
     }
 
+        public function showByCPF(Request $request)
+    {
+       
+        $cpf = $request->input('cpf'); 
+        $aluno = Aluno::where('cpf', $cpf)->first();
+    
+        if (!$aluno) {
+            return response()->json(['error' => 'Aluno não encontrado'], 404);
+        }
+    
+        $todasDisciplinas = Disciplina::all();
+        $disciplinasAprovadas = $aluno->disciplinas;
+    
+        $idsAprovadas = $disciplinasAprovadas->pluck('id')->toArray();
+        $disciplinasNaoCursadas = $todasDisciplinas->whereNotIn('id', $idsAprovadas);
+    
+        return response()->json([
+            'aluno' => $aluno,
+            'disciplinas' => $disciplinasNaoCursadas->values()
+        ]);
+    }
 
-        public function relatorioPorAluno(Request $request)
+    public function storeByAluno(Request $request)
+    {
+        $aluno_id = $request->input('aluno_id');
+        $disciplinas = $request->input('disciplinas', []);
+
+        $aluno = Aluno::findOrFail($aluno_id);
+        $aluno->disciplinas()->syncWithoutDetaching($disciplinas);
+
+        return redirect()->route('aluno_disciplina.createByAluno')->with('success', 'Disciplinas aprovadas registradas para o aluno.');
+    }
+
+    public function createByAluno()
+    {
+
+        return view('aluno_disciplina.create_by_aluno');
+    }
+
+    public function relatorioPorAluno(Request $request)
     {
         $cpf = $request->input('cpf'); 
         $aluno = Aluno::where('cpf', $cpf)->first();
@@ -52,20 +88,17 @@ class AlunoDisciplinaController extends Controller
         return view('relatorios.aluno', compact('aluno', 'disciplinasAprovadas', 'disciplinasFaltando'));
     }
 
-
     public function relatorioPorDisciplina(Request $request)
     {
         $disciplinaNome = $request->input('disciplinaNome'); 
         $disciplina = Disciplina::where('nome', $disciplinaNome)->firstOrFail(); 
-    
-        
+
         $alunosComDisciplina = $disciplina->alunos()->pluck('alunos.id')->toArray();
-        
+
         $alunosEmDependencia = Aluno::whereNotIn('id', $alunosComDisciplina)->get();
-    
+
         return view('relatorios.disciplina', compact('disciplina', 'alunosEmDependencia'));
     }
-    
 
     public function relatorioPorTurma(Request $request)
     {
@@ -87,5 +120,4 @@ class AlunoDisciplinaController extends Controller
 
         return view('relatorios.turma', compact('numTurma', 'alunosComDisciplinasNaoCursadas'));
     }
-
 }

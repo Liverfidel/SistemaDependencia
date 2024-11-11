@@ -38,6 +38,11 @@ Route::delete('disciplinas/remover/{disciplina}', [DisciplinaController::class, 
 Route::get('/aluno-disciplina/turma', [AlunoDisciplinaController::class, 'createByTurma'])->name('aluno_disciplina.createByTurma');
 Route::post('/aluno-disciplina/turma', [AlunoDisciplinaController::class, 'storeByTurma'])->name('aluno_disciplina.storeByTurma');
 
+Route::get('/aluno_disciplina/createByAluno', [AlunoDisciplinaController::class, 'createByAluno'])->name('aluno_disciplina.createByAluno'); 
+Route::post('/aluno_disciplina/showByCPF', [AlunoDisciplinaController::class, 'showByCPF'])->name('aluno_disciplina.showByCPF');
+Route::post('/aluno_disciplina/storeByAluno', [AlunoDisciplinaController::class, 'storeByAluno'])->name('aluno_disciplina.storeByAluno');
+
+
 Route::get('/relatorio/aluno', [AlunoDisciplinaController::class, 'relatorioPorAluno'])->name('relatorio.aluno');
 Route::get('/relatorio/disciplinas', [AlunoDisciplinaController::class, 'relatorioPorDisciplina'])->name('relatorio.disciplina');
 Route::get('/relatorio/disciplina/gerar', [AlunoDisciplinaController::class, 'relatorioPorDisciplina'])->name('relatorio.disciplina');
